@@ -1,9 +1,20 @@
-
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jan 13 10:06:00 2020
 
 @author: nguyenquangminh3
+
+
+Sub aa()
+Sheets("EA-Provinces").Range("AR11").Value = 3
+        
+   Call MAP_DATA
+   Call Fill_color
+End Sub
+
+# --- 
+Còn thiếu refresh các sheet dashboard
+
 """
 
 import time 
@@ -124,6 +135,9 @@ def main(main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
     
     cus_width_df = pd.read_excel('setup.xlsx',sheet_name='custom_width') 
     cus_width_df.dropna(inplace=True)
+    
+    if not os.path.exists(main_path+ '/excel'):
+        os.mkdir(main_path+ '/excel')
     #print('set_up done!')
 # =============================================================================
 #   step 2 : refresh and shoot 
@@ -237,4 +251,3 @@ if __name__ == "__main__":
         print(e)
 
     
-
