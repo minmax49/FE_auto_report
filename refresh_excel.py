@@ -122,6 +122,9 @@ def main(main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
         excel_save_path = save_path + '/{} {}.{}'.format(save_name,today,template_path[-4:])
     else:
         excel_save_path = None
+    if not os.path.exists(main_path+ '/excel'):
+        os.mkdir(main_path+ '/excel')
+        time.sleep(3)
         
     shutil.copy(temp_excel_path,excel_path)
     refresh_df = pd.read_excel('setup.xlsx',sheet_name='refresh') 
@@ -136,8 +139,7 @@ def main(main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
     cus_width_df = pd.read_excel('setup.xlsx',sheet_name='custom_width') 
     cus_width_df.dropna(inplace=True)
     
-    if not os.path.exists(main_path+ '/excel'):
-        os.mkdir(main_path+ '/excel')
+    
     #print('set_up done!')
 # =============================================================================
 #   step 2 : refresh and shoot 
