@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 Created on Mon Jan 13 09:24:06 2020
+
 @author: nguyenquangminh3
+;hoang.le.8@fecredit.com.
+dang.tran.3@fecredit.com.vn;hoang.le.8@fecredit.com.vn' 
 """
 
 #import os
@@ -22,7 +25,6 @@ def send(mail_name='minh.nguyen.50@fecredit.com.vn',
          mail_to ='minh.nguyen.50@fecredit.com.vn;',
          mail_cc = ""):
     
-    
     mail = win32.Dispatch('outlook.application').CreateItem(0)
     # select acount to send mail:
     mail.SentOnBehalfOfName = mail_name
@@ -33,12 +35,14 @@ def send(mail_name='minh.nguyen.50@fecredit.com.vn',
         mail.CC = mail_cc
     #mail.To = 'minh.nguyen.50@fecredit.com.vn;'
     # mail Subject = CRC Field Operation Report - Jan'20 MTD
-    mail.Subject = "[AUTO-MAIL] CRC Collections Performance Snapshot - {} ___TEST".format(
-        datetime.datetime.now().strftime("%h'%y"))
+    mail.Subject = "[AUTO-MAIL] CRC Collections Performance Snapshot {}".format(
+        datetime.datetime.now().strftime("%d%h%Y"))
     
     # Attachments files with id 
     excel_img_df = pd.read_excel(main_path +'/setup.xlsx',sheet_name='excel_img') 
     excel_img_df.dropna(subset = ['sheet_name'],inplace=True)
+    
+    mail_mode = pd.read_excel('setup.xlsx',sheet_name='main_setup')['send_mail'].iloc[0]
     
     for i in range(len(excel_img_df)):
         path1 = main_path + '/'+excel_img_df.name_img[i]
@@ -99,16 +103,18 @@ def send(mail_name='minh.nguyen.50@fecredit.com.vn',
     </div>
 
     <div>
-        <b>Link: {0} </b><br>
-        <a href ='{0}'>Go to excel file  </a> <br>
         
         <p><b> Best regards,</b> <br>
         <b>COLLECTION MIS. </b></p>
     </div>
-    """.format(comment['excel_path'])
+    """
     
     mail.HTMLBody = html_header + html_main
     #mail.Send()
-    mail.Display()
+    if mail_mode == 1:
+        mail.Send()
+    else:
+        mail.Display()
+        
 if __name__ == "__main__":
     send()
