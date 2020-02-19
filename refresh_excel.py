@@ -97,6 +97,8 @@ def main(#main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
        main_path = main_path[:-1]
        
     save_path = pd.read_excel('setup.xlsx',sheet_name='main_setup')['save_path'].iloc[0]
+ 
+        
     template_path = pd.read_excel('setup.xlsx',sheet_name='main_setup')['template_path'].iloc[0]
     save_name = pd.read_excel('setup.xlsx',sheet_name='main_setup')['save_name'].iloc[0]
     
@@ -112,7 +114,7 @@ def main(#main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
     today = datetime.datetime.today().strftime('%Y%m_%d') 
     excel_path = main_path + '/excel/{} {}.{}'.format(save_name,today,template_path[-4:])
    
-    if save_path != None:
+    if save_path != 0:
         if save_path[-1] == '/':
             save_path = save_path[:-1]
         excel_save_path = save_path + '/{} {}.{}'.format(save_name,today,template_path[-4:])
@@ -205,7 +207,7 @@ def main(#main_path = 'C:/Users/nguyenquangminh3/projects/CRC_report_01',
     wb.close()
     #wb.app.quit()    
      
-    if save_path != None:
+    if save_path != 0:
         shutil.copy(excel_path,excel_save_path)
     print(time.time()/60 - start, 'completed all refresh jobs')
     
@@ -249,5 +251,3 @@ if __name__ == "__main__":
         main()
     except Exception as e:
         print(e)
-
-    
